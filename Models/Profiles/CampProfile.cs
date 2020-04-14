@@ -7,7 +7,8 @@ namespace AspRestApiWorkshop.Models.Profiles
     {
         public CampProfile()
         {
-            CreateMap<Camp, CampModel>();
+            CreateMap<Camp, CampModel>()
+                .ForMember(camp => camp.Venue, o => o.MapFrom(m => m.Location.VenueName));
         }
     }
 }
