@@ -9,11 +9,11 @@ namespace AspRestApiWorkshop.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class CampsController : ControllerBase
     {
-        public string[] Get()
+        public object Get()
         {
-            return new[] { "Hello", "World" };
+            return new { Moniker = "DWX2020", Name = "Developer Week 2020" };
         }
     }
 }
