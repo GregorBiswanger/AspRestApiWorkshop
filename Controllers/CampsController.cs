@@ -24,11 +24,11 @@ namespace AspRestApiWorkshop.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<CampModel[]>> Get()
+        public async Task<ActionResult<CampModel[]>> Get(bool includeTalks = false)
         {
             try
             {
-                var results = await _campRepository.GetAllCampsAsync();
+                var results = await _campRepository.GetAllCampsAsync(includeTalks);
                 CampModel[] camps = _mapper.Map<CampModel[]>(results);
 
                 return camps;
