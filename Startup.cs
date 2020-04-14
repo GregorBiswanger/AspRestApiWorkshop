@@ -1,9 +1,11 @@
+using AutoMapper;
 using CoreCodeCamp.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace AspRestApiWorkshop
 {
@@ -20,6 +22,8 @@ namespace AspRestApiWorkshop
         {
             services.AddDbContext<CampContext>();
             services.AddScoped<ICampRepository, CampRepository>();
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddControllers();
         }
