@@ -11,9 +11,12 @@ namespace AspRestApiWorkshop.Controllers
     [ApiController]
     public class CampsController : ControllerBase
     {
-        public object Get()
+        [HttpGet]
+        public IActionResult GetCamps()
         {
-            return new { Moniker = "DWX2020", Name = "Developer Week 2020" };
+            if (true) return NotFound();
+
+            return Ok(new { Moniker = "DWX2020", Name = "Developer Week 2020" });
         }
     }
 }
