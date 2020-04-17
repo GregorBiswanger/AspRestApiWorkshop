@@ -27,6 +27,11 @@ namespace AspRestApiWorkshop.Controllers
             _linkGenerator = linkGenerator;
         }
 
+        /// <summary>
+        /// Zeigt alle Konferenzen an.
+        /// </summary>
+        /// <param name="includeTalks">Zuzühlich der Vorträge.</param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetCamps(bool includeTalks = false)
         {
@@ -50,6 +55,9 @@ namespace AspRestApiWorkshop.Controllers
         }
 
         [HttpGet("{moniker}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<CampModel>> GetCamp(string moniker)
         {
             try

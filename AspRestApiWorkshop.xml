@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AspRestApiWorkshop</name>
+    </assembly>
+    <members>
+        <member name="M:AspRestApiWorkshop.Controllers.Camps2Controller.GetCamps(System.Boolean)">
+            <summary>
+            Zeigt alle Konferenzen an.
+            </summary>
+            <param name="includeTalks">Zuzühlich der Vorträge.</param>
+            <returns></returns>
+        </member>
+        <member name="T:AspRestApiWorkshop.Models.CampModel">
+            <summary>
+            Unser Konferenz Datenmodell
+            </summary>
+        </member>
+        <member name="P:AspRestApiWorkshop.Models.CampModel.Name">
+            <summary>
+            Das zeigt euch wirklich den namen einer Konferenz an
+            </summary>
+        </member>
+    </members>
+</doc>

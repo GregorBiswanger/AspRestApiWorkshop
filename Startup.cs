@@ -3,11 +3,13 @@ using CoreCodeCamp.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using System;
 
 namespace AspRestApiWorkshop
@@ -42,9 +44,44 @@ namespace AspRestApiWorkshop
 
             services.AddControllers()
                 .AddXmlDataContractSerializerFormatters();
+
+            services.AddVersionedApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'VV";
+                options.SubstituteApiVersionInUrl = true;
+            });
+
+            services.AddSwaggerGen(setup =>
+            {
+                var provider = services.BuildServiceProvider().GetRequiredService<IApiVersionDescriptionProvider>();
+
+                foreach (var description in provider.ApiVersionDescriptions)
+                {
+                    setup.SwaggerDoc(description.GroupName, new OpenApiInfo 
+                    {
+                        Title = "Camps API",
+                        Version = description.ApiVersion.ToString(),
+                        Description = "Das ist unsere super coole API vom Workshop",
+                        Contact = new OpenApiContact
+                        {
+                            Name = "Gregor Biswanger",
+                            Email = "gregor.biswanger@web-enliven.de",
+                            Url = new Uri("https://twitter.com/BFreakout")
+                        },
+                        License = new OpenApiLicense
+                        {
+                            Name = "MIT License",
+                            Url = new Uri("https://opensource.org/licenses/MIT")
+                        }
+                    });
+                }
+
+                setup.IncludeXmlComments("AspRestApiWorkshop.xml");
+            });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
+            IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())
             {
@@ -56,6 +93,19 @@ namespace AspRestApiWorkshop
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(options =>
+            {
+                foreach (var description in provider.ApiVersionDescriptions)
+                {
+                    options.SwaggerEndpoint($"../swagger/{description.GroupName}/swagger.json",
+                        description.GroupName.ToUpperInvariant());
+                }
+
+                options.RoutePrefix = "";
+            });
 
             app.UseEndpoints(endpoints =>
             {

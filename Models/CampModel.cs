@@ -4,8 +4,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AspRestApiWorkshop.Models
 {
+    /// <summary>
+    /// Unser Konferenz Datenmodell
+    /// </summary>
     public class CampModel : LinkedResourceBaseDto
     {
+        /// <summary>
+        /// Das zeigt euch wirklich den namen einer Konferenz an
+        /// </summary>
         [Required(ErrorMessage = "Oh Man! Das braucht man doch...")]
         [StringLength(100)]
         public string Name { get; set; }
